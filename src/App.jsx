@@ -31,6 +31,10 @@ try {
     })
     .then((raw)=>{
       console.log(raw.data)
+      fetchPosts()
+      setEdited(null)
+      setTitle("")
+      setDesc("")
     })
   }else{
   axios.post("https://jsonplaceholder.typicode.com/posts",{
@@ -83,9 +87,9 @@ try {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="mb-10 mt-5 flex items-center justify-center" onSubmit={handleSubmit}>
         <input
-        className="text-xl px-4 border rounded-xl mr-7 ml-15"
+        className="text-2xl px-4 border rounded-xl mr-7 ml-15"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
           type="text"
@@ -93,7 +97,7 @@ try {
           name="title"
         />
         <input
-        className="text-xl px-4 border rounded-xl mr-7"
+        className="text-2xl px-4 border rounded-xl mr-7"
           onChange={(e) => setDesc(e.target.value)}
           value={desc}
           type="text"
@@ -107,15 +111,16 @@ try {
 
       </form>
 
-      {allPosts.map((post) => {
+      <div className="flex flex-wrap">
+        {allPosts.map((post) => {
         return (
           <div onClick={()=>{
             perticularPost(post.id)
           }} key={post.id} className="p-5">
-            <div className="bg-gray-600 relative w-full h-63 rounded-xl p-4">
+            <div className="bg-gray-600 relative w-[30vw] h-[50vh] rounded-xl p-4">
               <h1 className="text-3xl">{post.title}</h1>
               <h2 className="text-xl">{post.body}</h2>
-              <div className="flex gap-5 absolute bottom-10">
+              <div className="flex gap-5 absolute bottom-5">
                 <button 
                 onClick={()=>{
                   handleEdit(post)
@@ -129,6 +134,7 @@ try {
           </div>
         );
       })}
+      </div>
     </div>
   );
 };
